@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { setAuthHeader } from "./BackendService";
+import { loginRequest } from "./api/authRequest";
 
 export function Login() {
   const [formData, setFormData] = useState({ username: "", password: "" } as {
@@ -10,17 +11,9 @@ export function Login() {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    fetch("http://localhost:8080/api/auth/authenticate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-        setAuthHeader(data.access_token);
+    loginRequest(formData.username, formData.password)
+      .then((response) => {
+        console.log(response);
       })
       .catch((error) => {
         setAuthHeader(null);
