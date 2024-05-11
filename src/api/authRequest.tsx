@@ -1,12 +1,9 @@
-import { loginRequest as loginResponse } from "../@types/auth";
+import { loginRequest as loginReq, loginResponse } from "../@types/auth";
 import { Endpoints } from "../constants/endpoint";
-import axios, { axiosPrivate } from "./axios";
+import axios from "./axios";
 
-export const loginRequest = async (username: string, password: string): Promise<loginResponse> => {
-  const response = await axios.post(Endpoints.LOGIN_URL, {
-    username,
-    password,
-  });
+export const loginRequest = async (loginRequest:loginReq): Promise<loginResponse> => {
+  const response = await axios.post(Endpoints.LOGIN_URL, loginRequest);
 
   return response.data;
 };
