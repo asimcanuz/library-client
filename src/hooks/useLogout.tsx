@@ -10,7 +10,7 @@ const useLogout = () => {
       logoutRequest();
       setAuth({});
       axiosPrivate.defaults.headers.common["Authorization"] = "";
-      sessionStorage.removeItem("auth");
+      localStorage.removeItem("auth");
     } catch (err) {
       console.error(err);
     }
