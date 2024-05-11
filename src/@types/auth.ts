@@ -15,7 +15,7 @@ export type registerRequest = {
   username: string;
   password: string;
   email: string;
-  roles: Set<Role>;
+  role: Set<Role>;
 };
 
 enum Role {
@@ -25,6 +25,8 @@ enum Role {
 }
 
 export type loginResponse = {
-  accessToken: string;
-  refreshToken: string;
+  access_token: string;
+  refresh_token: string;
+  role: string[];
+  username: string;
 };
