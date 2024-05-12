@@ -6,7 +6,8 @@ import useLogout from "../hooks/useLogout";
 
 const TopNav = () => {
   const { auth } = useContext(AuthContext);
-  const isLoggedIn = auth.accessToken;
+  const isLoggedIn = auth.accessToken ? true : false;
+  const isAdmin = auth.role?.includes("ROLE_ADMIN");
 
   const navigate = useNavigate();
   const logout = useLogout();
@@ -14,9 +15,8 @@ const TopNav = () => {
   async function handleLogout() {
     console.log("Logging out");
     await logout();
-    navigate("/")
+    navigate("/");
   }
-
 
   return (
     <Navbar
@@ -43,10 +43,24 @@ const TopNav = () => {
                   </Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Link to="/admin" className="nav-link">
-                    Admin
+                  <Link to="/books" className="nav-link">
+                    Books
                   </Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Link to="/authors" className="nav-link">
+                    Authors
+                  </Link>
+                </Nav.Item>
+                {isAdmin ? (
+                  <Nav.Item>
+                    <Link to="/loans" className="nav-link">
+                      Admin
+                    </Link>
+                  </Nav.Item>
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <></>
