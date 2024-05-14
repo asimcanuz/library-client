@@ -4,7 +4,7 @@ import { RegisterInputs, RegisterRequestBody, Role } from "../@types/auth";
 import FormikPasswordField from "../components/FormikPasswordField";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { Card, Col, Form, Row } from "react-bootstrap";
+import { Alert, Card, Col, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registerRequest } from "../api/authRequest";
@@ -91,7 +91,9 @@ const Register = () => {
           <Card.Body>
             <Form onSubmit={formik.handleSubmit}>
               {formError && (
-                <div className="alert alert-danger">{formError}</div>
+                <Alert variant="danger" className="mb-3">
+                  {formError}
+                </Alert>
               )}
               <Row>
                 <Form.Group
