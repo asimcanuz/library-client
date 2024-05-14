@@ -24,13 +24,7 @@ export function Login() {
     console.log("Already logged in")
     navigate(from);
   }
-  
-  useEffect(() => {
-    if (accessToken) {
-      navigate(from);
-    }
-  }, [accessToken, navigate, from]);
-  
+
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
