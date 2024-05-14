@@ -9,7 +9,17 @@ export type loginRequest = {
   password: string;
 };
 
-export type registerRequest = {
+export interface RegisterInputs {
+  firstName: string;
+  lastName: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+  email: string;
+  role: Role[];
+};
+
+export interface RegisterRequestBody {
   firstName: string;
   lastName: string;
   username: string;
@@ -18,9 +28,10 @@ export type registerRequest = {
   role: Set<Role>;
 };
 
-enum Role {
+
+export enum Role {
   ROLE_USER = "ROLE_USER",
-  ROLE_MODERATOR = "ROLE_MODERATOR",
+  ROLE_MODERATOR = "ROLE_MOD",
   ROLE_ADMIN = "ROLE_ADMIN",
 }
 
