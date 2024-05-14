@@ -68,11 +68,17 @@ const TopNav = () => {
           </Nav>
           <Nav>
             {!isLoggedIn ? (
-              <Nav.Item>
-                <Link to="/login" className="nav-link">
-                  <Button variant="primary">Login</Button>
+              <>
+                <Nav.Item>
+                  <Link to="/login" className="nav-link">
+                    <Button variant="primary">Login</Button>
+                  </Link>
+                </Nav.Item>
+              <Nav.Item></Nav.Item>
+                <Link to="/register" className="nav-link">
+                  <Button variant="success">Register</Button>
                 </Link>
-              </Nav.Item>
+              </>
             ) : (
               <></>
             )}
