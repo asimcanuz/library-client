@@ -16,8 +16,8 @@ export interface RegisterInputs {
   password: string;
   confirmPassword: string;
   email: string;
-  role: Role[];
-};
+  roles: Role[];
+}
 
 export interface RegisterRequestBody {
   firstName: string;
@@ -25,9 +25,8 @@ export interface RegisterRequestBody {
   username: string;
   password: string;
   email: string;
-  role: Set<Role>;
-};
-
+  roles: Role[];
+}
 
 export enum Role {
   ROLE_USER = "ROLE_USER",

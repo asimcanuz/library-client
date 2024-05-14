@@ -10,12 +10,11 @@ import * as Yup from "yup";
 import { registerRequest } from "../api/authRequest";
 
 const Register = () => {
-
-  const [formError,setFormError] = useState<string>("");
+  const [formError, setFormError] = useState<string>("");
 
   const {
     auth: { accessToken },
-    setAuth
+    setAuth,
   } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,7 +27,7 @@ const Register = () => {
     password: "",
     confirmPassword: "",
     email: "",
-    role: [] as Role[],
+    roles: [] as Role[],
   };
 
   const formik = useFormik({
@@ -59,19 +58,23 @@ const Register = () => {
         username: values.username,
         password: values.password,
         email: values.email,
-        role: new Set(values.role),
+        roles: values.roles,
       };
 
-      registerRequest(registerRequestBody).then((data) => {
-        const { access_token, role, username } = data;
-        localStorage.setItem("auth", JSON.stringify({ accessToken: access_token, role, username }));
-        setAuth({ accessToken: access_token, role, username });
-        navigate(from);
-      }
-      ).catch((err) => {
-        console.error(err);
-        setFormError(err);
-       });
+      registerRequest(registerRequestBody)
+        .then((data) => {
+          const { access_token, role, username } = data;
+          localStorage.setItem(
+            "auth",
+            JSON.stringify({ accessToken: access_token, role, username })
+          );
+          setAuth({ accessToken: access_token, role, username });
+          navigate(from);
+        })
+        .catch((err) => {
+          console.error(err);
+          setFormError(err);
+        });
     },
   });
 
@@ -81,120 +84,121 @@ const Register = () => {
   }
 
   return (
-    
-        <Row className="mt-5 justify-content-center align-items-center">
-          <Col  md={{ span: 6 }}>
-            <Card>
-              <Card.Header>Register</Card.Header>
-              <Card.Body>
-                <Form onSubmit={formik.handleSubmit}>
-                  {formError && <div className="alert alert-danger">{formError}</div>}
-                  <Row>
-                    <Form.Group
-                      as={Col}
-                      md={6}
-                      xs={12}
-                      className="mb-3"
-                      controlId="formBasicFirstName"
-                    >
-                      <Form.Label>First Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter first name"
-                        isInvalid={
-                          !!formik.touched.firstName &&
-                          !!formik.errors.firstName
-                        }
-                        {...formik.getFieldProps("firstName")}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.firstName}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                    <Form.Group
-                      as={Col}
-                      md={6}
-                      xs={12}
-                      className="mb-3"
-                      controlId="formBasicLastName"
-                    >
-                      <Form.Label>Last Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter last name"
-                        isInvalid={
-                          !!formik.touched.lastName && !!formik.errors.lastName
-                        }
-                        {...formik.getFieldProps("lastName")}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {formik.errors.lastName}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  </Row>
-                  <Form.Group className="mb-3" controlId="formBasicUsername">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Enter username"
-                      isInvalid={
-                        !!formik.touched.username && !!formik.errors.username
-                      }
-                      {...formik.getFieldProps("username")}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.username}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <FormikPasswordField formik={formik} />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-                    <Form.Label>Confirm Password</Form.Label>
-                    <FormikPasswordField fieldName="confirmPassword" placeholder="Confirm Password" formik={formik} />
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      isInvalid={
-                        !!formik.touched.email && !!formik.errors.email
-                      }
-                      {...formik.getFieldProps("email")}
-                    />
+    <Row className="mt-5 justify-content-center align-items-center">
+      <Col md={{ span: 6 }}>
+        <Card>
+          <Card.Header>Register</Card.Header>
+          <Card.Body>
+            <Form onSubmit={formik.handleSubmit}>
+              {formError && (
+                <div className="alert alert-danger">{formError}</div>
+              )}
+              <Row>
+                <Form.Group
+                  as={Col}
+                  md={6}
+                  xs={12}
+                  className="mb-3"
+                  controlId="formBasicFirstName"
+                >
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter first name"
+                    isInvalid={
+                      !!formik.touched.firstName && !!formik.errors.firstName
+                    }
+                    {...formik.getFieldProps("firstName")}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.firstName}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group
+                  as={Col}
+                  md={6}
+                  xs={12}
+                  className="mb-3"
+                  controlId="formBasicLastName"
+                >
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter last name"
+                    isInvalid={
+                      !!formik.touched.lastName && !!formik.errors.lastName
+                    }
+                    {...formik.getFieldProps("lastName")}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.lastName}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Row>
+              <Form.Group className="mb-3" controlId="formBasicUsername">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter username"
+                  isInvalid={
+                    !!formik.touched.username && !!formik.errors.username
+                  }
+                  {...formik.getFieldProps("username")}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.username}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <FormikPasswordField formik={formik} />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
+                <Form.Label>Confirm Password</Form.Label>
+                <FormikPasswordField
+                  fieldName="confirmPassword"
+                  placeholder="Confirm Password"
+                  formik={formik}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  isInvalid={!!formik.touched.email && !!formik.errors.email}
+                  {...formik.getFieldProps("email")}
+                />
 
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.email}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <Form.Group className="mb-3" controlId="formBasicRole">
-                    <Form.Label>Role</Form.Label>
-                    <Form.Select
-                      multiple
-                      isInvalid={!!formik.touched.role && !!formik.errors.role}
-                      {...formik.getFieldProps("role")}
-                    >
-                      <option value="ROLE_USER">User</option>
-                      <option value="ROLE_MOD">Moderator</option>
-                      <option value="ROLE_ADMIN">Admin</option>
-                    </Form.Select>
-                    <Form.Control.Feedback type="invalid">
-                      {formik.errors.role}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-                  <div className="d-grid gap-2">
-                    <button className="btn btn-primary" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.email}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicRole">
+                <Form.Label>Role</Form.Label>
+                <Form.Select
+                  multiple
+                  isInvalid={!!formik.touched.roles && !!formik.errors.roles}
+                  {...formik.getFieldProps("roles")}
+                >
+                  <option value="ROLE_USER">User</option>
+                  <option value="ROLE_MOD">Moderator</option>
+                  <option value="ROLE_ADMIN">Admin</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid">
+                  {formik.errors.roles}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <div className="d-grid gap-2">
+                <button className="btn btn-primary" type="submit">
+                  Submit
+                </button>
+              </div>
+            </Form>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
