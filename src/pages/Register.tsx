@@ -3,9 +3,8 @@ import { AuthContext } from "../context/AuthContext";
 import { RegisterInputs, RegisterRequestBody, Role } from "../@types/auth";
 import FormikPasswordField from "../components/FormikPasswordField";
 
-
 import { useLocation, useNavigate } from "react-router-dom";
-import { Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Card, Col, Form, Row } from "react-bootstrap";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { registerRequest } from "../api/authRequest";
@@ -68,7 +67,7 @@ const Register = () => {
         const { access_token, role, username } = data;
         localStorage.setItem("auth", JSON.stringify({ accessToken: access_token, role, username }));
         setAuth({ accessToken: access_token, role, username });
-        navigate("/home");
+        navigate(from);
       }
       ).catch((err) => {
         console.error(err);
