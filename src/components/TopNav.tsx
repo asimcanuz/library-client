@@ -1,8 +1,9 @@
-import { Button, Container, Nav, Navbar } from "react-bootstrap";
+import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import useLogout from "../hooks/useLogout";
+
 
 const TopNav = () => {
   const { auth } = useContext(AuthContext);
@@ -26,37 +27,33 @@ const TopNav = () => {
       className="bg-body-tertiary"
     >
       <Container>
-        <Navbar.Brand href="/">Navbar</Navbar.Brand>
+        <Navbar.Brand as={Link} to={"/"}>
+          Navbar
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto ">
             <Nav.Item>
-              <Link to="/" className="nav-link">
+              <Nav.Link as={Link} to={"/"}>
                 Home
-              </Link>
+              </Nav.Link>
             </Nav.Item>
             {isLoggedIn ? (
               <>
                 <Nav.Item>
-                  <Link to="/dashboard" className="nav-link">
-                    Dashboard
-                  </Link>
+                  {NavLinkByRole()}
                 </Nav.Item>
                 <Nav.Item>
-                  <Link to="/books" className="nav-link">
+                  <Nav.Link as={Link} to={"/books"}>
                     Books
-                  </Link>
+                  </Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
-                  <Link to="/authors" className="nav-link">
-                    Authors
-                  </Link>
-                </Nav.Item>
+
                 {isAdmin ? (
                   <Nav.Item>
-                    <Link to="/loans" className="nav-link">
+                    <Nav.Link as={Link} to={"/admin"}>
                       Admin
-                    </Link>
+                    </Nav.Link>
                   </Nav.Item>
                 ) : (
                   <></>
@@ -74,20 +71,28 @@ const TopNav = () => {
                     <Button variant="primary">Login</Button>
                   </Link>
                 </Nav.Item>
-              <Nav.Item></Nav.Item>
-                <Link to="/register" className="nav-link">
-                  <Button variant="success">Register</Button>
-                </Link>
+                <Nav.Item>
+                  <Link to="/register" className="nav-link">
+                    <Button variant="success">Register</Button>
+                  </Link>
+                </Nav.Item>
               </>
             ) : (
               <></>
             )}
             {isLoggedIn ? (
-              <Nav.Item>
-                <Button variant="danger" onClick={() => handleLogout()}>
-                  Logout
-                </Button>
-              </Nav.Item>
+              <NavDropdown title={auth.username} >
+                  <NavDropdown.Item as={Link} to="/profile">
+                    Profile
+                  </NavDropdown.Item>
+                
+                <NavDropdown.Divider />
+                  <NavDropdown.Item className="d-grid" >
+                    <Button variant="danger" onClick={handleLogout}>
+                    Logout
+                  </Button>
+                  </NavDropdown.Item>
+              </NavDropdown>
             ) : (
               <></>
             )}
@@ -97,4 +102,22 @@ const TopNav = () => {
     </Navbar>
   );
 };
+
+function NavLinkByRole() {
+  // rollün içerdiği rollerin sayfalarını döndürür
+  const { auth } = useContext(AuthContext);
+  const roles = auth.role;
+  return roles?.map((role) => {
+    role = role.replace("ROLE_", "").toLowerCase();
+    return (
+      <Nav.Item key={role}>
+        <Nav.Link as={Link} to={"/" + role+"/dasboard"}>
+          {role.toUpperCase + " Dashboard"}
+        </Nav.Link>
+      </Nav.Item>
+    )
+  }); 
+  
+}
+
 export default TopNav;
