@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import { loginRequest } from "../api/authRequest";
 import { AuthContext } from "../context/AuthContext";
 import { loginRequest as loginRequestType } from "../@types/auth";
@@ -8,6 +8,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import FormikPasswordField from "../components/FormikPasswordField";
 export function Login() {
+
+  const [formError, setFormError] = useState<string>("");
+
   const {
     auth: { accessToken },
     setAuth,
@@ -52,6 +55,11 @@ export function Login() {
         })
         .catch((err) => {
           console.error(err);
+          setFormError("Invalid username or password");
+          setTimeout(() => {
+            setFormError("");
+          }, 5000);
+
         });
     },
   });
@@ -63,6 +71,12 @@ export function Login() {
           <Card.Header>Login</Card.Header>
           <Card.Body>
             <Form onSubmit={formik.handleSubmit}>
+              {formError && (
+                <Alert variant="danger" className="mb-3">
+                  {formError}
+                </Alert>
+                
+              )}
               <Form.Group className="mb-3" controlId="formBasicUsernmae">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
