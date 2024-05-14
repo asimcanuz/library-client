@@ -61,7 +61,6 @@ const Register = () => {
         email: values.email,
         role: new Set(values.role),
       };
-      console.log(registerRequestBody);
 
       registerRequest(registerRequestBody).then((data) => {
         const { access_token, role, username } = data;
