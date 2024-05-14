@@ -18,7 +18,6 @@ const TopNav = () => {
     await logout();
     navigate("/");
   }
-
   return (
     <Navbar
       sticky="top"
@@ -40,9 +39,9 @@ const TopNav = () => {
             </Nav.Item>
             {isLoggedIn ? (
               <>
-                <Nav.Item>
-                  {NavLinkByRole()}
-                </Nav.Item>
+     
+                {NavLinkByRole()}
+
                 <Nav.Item>
                   <Nav.Link as={Link} to={"/books"}>
                     Books
@@ -81,17 +80,17 @@ const TopNav = () => {
               <></>
             )}
             {isLoggedIn ? (
-              <NavDropdown title={auth.username} >
-                  <NavDropdown.Item as={Link} to="/profile">
-                    Profile
-                  </NavDropdown.Item>
-                
+              <NavDropdown title={auth.username}>
+                <NavDropdown.Item as={Link} to="/profile">
+                  Profile
+                </NavDropdown.Item>
+
                 <NavDropdown.Divider />
-                  <NavDropdown.Item className="d-grid" >
-                    <Button variant="danger" onClick={handleLogout}>
+                <NavDropdown.Item className="d-grid">
+                  <Button variant="danger" onClick={handleLogout}>
                     Logout
                   </Button>
-                  </NavDropdown.Item>
+                </NavDropdown.Item>
               </NavDropdown>
             ) : (
               <></>
@@ -107,12 +106,12 @@ function NavLinkByRole() {
   // rollün içerdiği rollerin sayfalarını döndürür
   const { auth } = useContext(AuthContext);
   const roles = auth.role;
-  return roles?.map((role) => {
+ return roles?.map((role, index) => {
     role = role.replace("ROLE_", "").toLowerCase();
     return (
-      <Nav.Item key={role}>
-        <Nav.Link as={Link} to={"/" + role+"/dasboard"}>
-          {role.toUpperCase + " Dashboard"}
+      <Nav.Item key={index}>
+        <Nav.Link as={Link} to={"/" +role+"/dashboard"}>
+          {role.charAt(0).toLocaleUpperCase()+role.slice(1,role.length) + " Dashboard"}
         </Nav.Link>
       </Nav.Item>
     )

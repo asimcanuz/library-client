@@ -19,7 +19,6 @@ const Routers = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
-        
         <Route
           path="user"
           element={<RequireAuth allowedRoles={["ROLE_USER"]} />}
@@ -27,15 +26,13 @@ const Routers = () => {
           <Route path="dashboard" element={<UserDashboard />} />
         </Route>
 
-        <Route
-          path="admin"
-          element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}
-        >
-          <Route path="dashboard" element={<AdminDashboard/>} />
+        <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN"]} />}>
+          <Route path="/admin" element={<h1>Admin</h1>} />
+          <Route path="admin/dashboard" element={<AdminDashboard />} />
         </Route>
 
         <Route path="mod" element={<RequireAuth allowedRoles={["ROLE_MOD"]} />}>
-          <Route path="dashboard" element={<ModDashboard/>} />
+          <Route path="dashboard" element={<ModDashboard />} />
         </Route>
 
         <Route

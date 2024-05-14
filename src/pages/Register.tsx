@@ -49,7 +49,6 @@ const Register = () => {
       role: Yup.array()
         .of(Yup.string().oneOf(["ROLE_USER", "ROLE_ADMIN", "ROLE_MOD"]))
         .min(1, "Select at least one role")
-        .required("Required"),
     }),
     onSubmit: (values) => {
       const registerRequestBody: RegisterRequestBody = {

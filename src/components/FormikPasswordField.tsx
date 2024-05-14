@@ -20,7 +20,7 @@ const FormikPasswordField: React.FC<PasswordInputProps> = ({ formik,fieldName="p
 
   return (
     <InputGroup>
-        <Form.Control
+      <Form.Control
           type={showPassword ? "text" : "password"}
           placeholder="Enter password"
           isInvalid={!!formik.touched[fieldName] && !!formik.errors[fieldName]}
@@ -36,4 +36,4 @@ const FormikPasswordField: React.FC<PasswordInputProps> = ({ formik,fieldName="p
   );
 };
     
-export default FormikPasswordField;
+export default FormikPasswordField
