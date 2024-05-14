@@ -3,19 +3,23 @@ import { Login } from "./pages/Login";
 import Layout from "./Layout";
 import useAuth from "./hooks/useAuth";
 import Home from "./pages/Home";
+import Register from "./pages/Register";
 
 const Routers = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
       <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Home/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
         <Route element={<RequireAuth allowedRoles={["ROLE_USER"]} />}>
           <Route path="dashboard" element={<h1>Dashboard</h1>} />
           <Route path="authors" element={<h1>Authors</h1>} />
           <Route path="books" element={<h1>Books</h1>} />
         </Route>
-        <Route element={<RequireAuth allowedRoles={["ROLE_ADMIN","ROLE_MOD"]} />}>
+        <Route
+          element={<RequireAuth allowedRoles={["ROLE_ADMIN", "ROLE_MOD"]} />}
+        >
           <Route path="loans" element={<h1>Admin</h1>} />
         </Route>
       </Route>
