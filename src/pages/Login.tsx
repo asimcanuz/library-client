@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { loginRequest } from "../api/authRequest";
 import { AuthContext } from "../context/AuthContext";
 import { loginRequest as loginRequestType } from '../@types/auth';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 export function Login() {
   
@@ -42,9 +42,8 @@ export function Login() {
     
   };
   return (
-    <div style={{"height":"100vh"}}>
-      <Container className="h-100">
-        <Row className="h-100 justify-content-center align-items-center">
+ 
+        <Row className="mt-5 justify-content-center align-items-center">
           <Col md={{ span: 6 }}>
             <Card>
               <Card.Header>Login</Card.Header>
@@ -71,25 +70,35 @@ export function Login() {
                       }
                     />
                   </Form.Group>
-                  <Col className="d-grid">
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                      <Form.Check
-                        type="checkbox"
-                        label="Check me out"
-                        checked={persist}
-                        onChange={(e) => setPersist(e.target.checked)}
-                      />
-                    </Form.Group>
+                  <Row>
+                    <Col>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="formBasicCheckbox"
+                      >
+                        <Form.Check
+                          type="checkbox"
+                          label="Check me out"
+                          checked={persist}
+                          onChange={(e) => setPersist(e.target.checked)}
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col className="d-flex justify-content-end">
+                      <Link to="/register">Register</Link>
+                    </Col>
+                  </Row>
+                  <div className="d-grid gap-2">
                     <Button variant="primary" type="submit">
                       Submit
                     </Button>
-                  </Col>
+                  </div>
+
                 </Form>
               </Card.Body>
             </Card>
           </Col>
         </Row>
-      </Container>
-    </div>
+
   );
 }
