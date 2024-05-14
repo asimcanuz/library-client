@@ -1,4 +1,4 @@
-import { loginRequest as loginReq, loginResponse } from "../@types/auth";
+import { loginRequest as loginReq, loginResponse, RegisterRequestBody } from "../@types/auth";
 import { Endpoints } from "../constants/endpoint";
 import axios from "./axios";
 
@@ -8,11 +8,8 @@ export const loginRequest = async (loginRequest:loginReq): Promise<loginResponse
   return response.data;
 };
 
-export const registerRequest = async (username: string, password: string) => {
-  const response = await axios.post(Endpoints.REGISTER_URL, {
-    username,
-    password,
-  });
+export const registerRequest = async (registerRequestBody:RegisterRequestBody) => {
+  const response = await axios.post(Endpoints.REGISTER_URL, registerRequestBody);
 
   return response.data;
 };
